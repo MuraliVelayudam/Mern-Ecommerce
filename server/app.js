@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import authRoute from "./routers/auth_Route/index.js";
+import admin_Product_Route from "./routers/admin_Route/Product_Route/index.js";
 
 const app = express();
 
@@ -27,5 +28,8 @@ app.use(morgan("dev"));
 
 // AUTH
 app.use("/api/auth", authRoute);
+
+// ADMIN PRODUCT
+app.use("/api/admin/product", admin_Product_Route);
 
 export default app;

@@ -5,6 +5,9 @@ const _Config = {
   port: process.env.PORT,
   mongodbURL: process.env.MONGODB_URL,
   secretKey: process.env.SECRETE_KEY,
+  cloudName: process.env.CLOUDNAME,
+  cloud_Api_Key: process.env.CLOUD_API_KEY,
+  cloud_Api_Secret: process.env.CLOUD_API_SECRET,
 };
 
 const configuration = Object.freeze(_Config);

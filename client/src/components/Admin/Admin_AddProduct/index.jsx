@@ -14,8 +14,11 @@ import { Separator } from "../../ui/separator";
 // REACT ICON
 import { FaPlus } from "react-icons/fa6";
 import AddProduct_Form from "./Admin_AddProduct_Form";
+import { useState } from "react";
+import FormLoader from "@/components/Form_Loader";
 
 export default function Admin_AddProduct() {
+  const [loadForm, setLoadForm] = useState(false);
   return (
     <div className="">
       <Sheet>
@@ -27,16 +30,20 @@ export default function Admin_AddProduct() {
             <span className="hidden md:block">Add New Product</span>
           </Button>
         </SheetTrigger>
-        <SheetContent className="rounded-l-3xl space-y-8">
+        <SheetContent className="rounded-l-3xl space-y-4 overflow-auto scroll-smooth">
           <SheetHeader>
-            <SheetTitle className="font-heading text-center tracking-wide">
+            <SheetTitle className="font-heading text-center tracking-wide text-3xl uppercase">
               Add New Product
             </SheetTitle>
             <SheetDescription className="hidden"></SheetDescription>
           </SheetHeader>
           <Separator />
           <div>
-            <AddProduct_Form />
+            {loadForm ? (
+              <FormLoader />
+            ) : (
+              <AddProduct_Form setLoadForm={setLoadForm} />
+            )}
           </div>
         </SheetContent>
       </Sheet>

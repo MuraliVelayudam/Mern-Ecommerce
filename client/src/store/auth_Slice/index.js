@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const URL = "http://localhost:8000";
+const URL = import.meta.env.VITE_URL;
 
 const initialState = {
   isAuthenticated: false,
