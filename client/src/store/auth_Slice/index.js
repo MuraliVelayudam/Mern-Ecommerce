@@ -45,6 +45,21 @@ export const user_Check_Auth_Action = createAsyncThunk(
   }
 );
 
+// USER SIGNOUT ACTION
+export const user_SignOut_Action = createAsyncThunk(
+  "/auth/signOut",
+  async () => {
+    const response = await axios.post(
+      `${URL}/api/auth/signOut`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+    return response?.data;
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -91,6 +106,12 @@ const authSlice = createSlice({
         state.user = action.payload.success ? action.payload.user : null;
       })
       .addCase(user_Check_Auth_Action.rejected, (state) => {
+        state.isLoading = false;
+        state.isAuthenticated = false;
+        state.user = null;
+      })
+      // USER SIGNOUT ACTION
+      .addCase(user_SignOut_Action.fulfilled, (state) => {
         state.isLoading = false;
         state.isAuthenticated = false;
         state.user = null;

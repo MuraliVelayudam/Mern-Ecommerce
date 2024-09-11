@@ -72,17 +72,24 @@ const user_SignIn = async (req, res) => {
         role: userExists?.role,
       },
       configuration?.secretKey,
-      { expiresIn: 1 * 60 * 60 * 1000 }
+      { expiresIn: 24 * 60 * 60 * 1000 }
     );
 
     // GETTING USER INFO
     const { password: pass, ...userInfo } = userExists?._doc;
 
-    res.cookie("token", token, { httpOnly: true, secure: false }).json({
-      success: true,
-      message: "Signed In Successfully !",
-      userInfo,
-    });
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: configuration?.mode === "production",
+        sameSite: "Strict",
+        maxAge: 23 * 60 * 60 * 1000,
+      })
+      .json({
+        success: true,
+        message: "Signed In Successfully !",
+        userInfo,
+      });
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -95,10 +102,17 @@ const user_SignIn = async (req, res) => {
 
 // USER SIGN OUT
 const user_SignOut = async (req, res) => {
-  res.clearCookie("token").json({
-    success: true,
-    message: "Signed Out Successfully !",
-  });
+  res
+    .clearCookie("token", {
+      path: "/",
+      httpOnly: true,
+      sameSite: "Strict",
+      secure: true,
+    })
+    .json({
+      success: true,
+      message: "Signed Out Successfully !",
+    });
 };
 
 // CHECK AUTH

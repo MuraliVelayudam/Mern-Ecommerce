@@ -4,6 +4,7 @@ dotenv.config();
 const _Config = {
   port: process.env.PORT,
   mongodbURL: process.env.MONGODB_URL,
+  mode: process.env.NODE_ENV,
   secretKey: process.env.SECRETE_KEY,
   cloudName: process.env.CLOUDNAME,
   cloud_Api_Key: process.env.CLOUD_API_KEY,
