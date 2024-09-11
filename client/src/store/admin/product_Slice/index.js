@@ -39,8 +39,9 @@ export const get_All_Products = createAsyncThunk(
 export const update_Admin_Product = createAsyncThunk(
   "/product/update_Product",
   async ({ formData, productId }) => {
+    console.log(productId);
     const result = await axios.put(
-      `${URL}/api/admin/product/update_Product/:${productId}`,
+      `${URL}/api/admin/product/update_Product/${productId}`,
       formData,
       {
         headers: {
@@ -57,7 +58,7 @@ export const delete_Admin_product = createAsyncThunk(
   "/product/delete_Product",
   async ({ formData, productId }) => {
     const result = await axios.delete(
-      `${URL}/api/admin/product/delete_Product/:${productId}`,
+      `${URL}/api/admin/product/delete_Product/${productId}`,
       formData,
       {
         headers: {

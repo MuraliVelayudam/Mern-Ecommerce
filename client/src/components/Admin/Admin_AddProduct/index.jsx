@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Button } from "../../ui/button";
 
 import {
@@ -17,13 +18,23 @@ import AddProduct_Form from "./Admin_AddProduct_Form";
 import { useState } from "react";
 import FormLoader from "@/components/Form_Loader";
 
-export default function Admin_AddProduct() {
+export default function Admin_AddProduct({
+  openDialog,
+  setOpenDialog,
+  product,
+  setProduct,
+}) {
   const [loadForm, setLoadForm] = useState(false);
   return (
-    <div className="">
-      <Sheet>
+    <div>
+      <Sheet open={openDialog} onOpenChange={setOpenDialog}>
         <SheetTrigger asChild>
-          <Button className="flex items-center gap-2">
+          <Button
+            className="flex items-center gap-2"
+            onClick={() => {
+              setProduct("");
+            }}
+          >
             <span className="mb-1">
               <FaPlus size={16} />
             </span>
@@ -42,7 +53,12 @@ export default function Admin_AddProduct() {
             {loadForm ? (
               <FormLoader />
             ) : (
-              <AddProduct_Form setLoadForm={setLoadForm} />
+              <AddProduct_Form
+                setProduct={setProduct}
+                setLoadForm={setLoadForm}
+                product={product}
+                setOpenDialog={setOpenDialog}
+              />
             )}
           </div>
         </SheetContent>

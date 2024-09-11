@@ -33,6 +33,7 @@ import { useState } from "react";
 import {
   add_Admin_Product,
   get_All_Products,
+  update_Admin_Product,
 } from "@/store/admin/product_Slice";
 import { useToast } from "@/hooks/use-toast";
 
@@ -40,11 +41,11 @@ const formSchema = z.object({
   title: z
     .string()
     .min(2, { message: "Title Min 2 Characters Required" })
-    .max(50),
+    .max(1500),
   description: z
     .string()
     .min(2, { message: "Description Min 2 Characters Required" })
-    .max(50),
+    .max(5000),
   category: z.string().min(1, { message: "Please Select One Category" }),
   brand: z.string().min(1, { message: "Please Select One Category" }),
   price: z.coerce.number().min(1, { message: "Please Enter Min Price" }),
@@ -52,7 +53,12 @@ const formSchema = z.object({
   totalStock: z.coerce.number().min(0, { message: "Please Enter Total Stock" }),
 });
 
-export default function AddProduct_Form({ setLoadForm }) {
+export default function AddProduct_Form({
+  setLoadForm,
+  product,
+  setOpenDialog,
+  setProduct,
+}) {
   const [imageFile, setImageFile] = useState(null);
   const [uploadImageUrl, setUploadImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
@@ -62,38 +68,64 @@ export default function AddProduct_Form({ setLoadForm }) {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      category: "",
-      brand: "",
-      price: "",
-      salePrice: "",
-      totalStock: "",
+      title: product?.title || "",
+      description: product?.description || "",
+      category: product?.category || "",
+      brand: product?.brand || "",
+      price: product?.price || "",
+      salePrice: product?.salePrice || "",
+      totalStock: product?.totalStock || "",
     },
   });
 
   function onSubmit(values) {
     const formData = { ...values, image: uploadImageUrl };
     setLoadForm((prev) => !prev);
-    dispatch(add_Admin_Product(formData)).then((data) => {
-      if (data?.payload?.success) {
-        setImageFile(null);
-        setUploadImageUrl("");
-        dispatch(get_All_Products());
-        form.reset();
-        toast({
-          title: data?.payload?.message,
+    const productId = product?._id;
+    product
+      ? dispatch(update_Admin_Product({ formData, productId })).then((data) => {
+          if (data?.payload?.success) {
+            setLoadForm((prev) => !prev);
+            toast({
+              title: data?.payload?.message,
+            });
+            form.reset();
+            dispatch(get_All_Products());
+            setOpenDialog((prev) => !prev);
+            setProduct("");
+          } else {
+            toast({
+              title: data?.payload?.message,
+              description: "Please Try Again.",
+              variant: "destructive",
+            });
+            setLoadForm((prev) => {
+              !prev;
+              setProduct("");
+            });
+          }
+        })
+      : dispatch(add_Admin_Product(formData)).then((data) => {
+          if (data?.payload?.success) {
+            setImageFile(null);
+            setUploadImageUrl("");
+            dispatch(get_All_Products());
+            form.reset();
+            setProduct("");
+            toast({
+              title: data?.payload?.message,
+            });
+            setLoadForm((prev) => !prev);
+            setOpenDialog((prev) => !prev);
+          } else {
+            toast({
+              title: data?.payload?.message,
+              description: "Please Try Again.",
+              variant: "destructive",
+            });
+            setLoadForm((prev) => !prev);
+          }
         });
-        setLoadForm((prev) => !prev);
-      } else {
-        toast({
-          title: data?.payload?.message,
-          description: "Please Try Again.",
-          variant: "destructive",
-        });
-        setLoadForm((prev) => !prev);
-      }
-    });
   }
 
   return (
@@ -108,6 +140,7 @@ export default function AddProduct_Form({ setLoadForm }) {
             setUploadImageUrl={setUploadImageUrl}
             setLoading={setLoading}
             loading={loading}
+            product={product}
           />
           {loading ? (
             <FormLoader />
@@ -124,7 +157,7 @@ export default function AddProduct_Form({ setLoadForm }) {
                       <Input
                         placeholder="Enter Product Title . . ."
                         {...field}
-                        disabled={!uploadImageUrl}
+                        disabled={product ? false : !uploadImageUrl}
                       />
                     </FormControl>
                     <FormMessage />
@@ -141,7 +174,7 @@ export default function AddProduct_Form({ setLoadForm }) {
                     <FormControl>
                       <Textarea
                         placeholder="Enter Product Description . . ."
-                        disabled={!uploadImageUrl}
+                        disabled={product ? false : !uploadImageUrl}
                         {...field}
                       />
                     </FormControl>
@@ -160,7 +193,7 @@ export default function AddProduct_Form({ setLoadForm }) {
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      disabled={!uploadImageUrl}
+                      disabled={product ? false : !uploadImageUrl}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -193,7 +226,7 @@ export default function AddProduct_Form({ setLoadForm }) {
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      disabled={!uploadImageUrl}
+                      disabled={product ? false : !uploadImageUrl}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -226,7 +259,7 @@ export default function AddProduct_Form({ setLoadForm }) {
                     <FormControl>
                       <Input
                         placeholder="Enter Product Price . . ."
-                        disabled={!uploadImageUrl}
+                        disabled={product ? false : !uploadImageUrl}
                         {...field}
                       />
                     </FormControl>
@@ -245,7 +278,7 @@ export default function AddProduct_Form({ setLoadForm }) {
                     <FormControl>
                       <Input
                         placeholder="Enter Product Price . . .(Optional)"
-                        disabled={!uploadImageUrl}
+                        disabled={product ? false : !uploadImageUrl}
                         {...field}
                       />
                     </FormControl>
@@ -266,7 +299,7 @@ export default function AddProduct_Form({ setLoadForm }) {
                         type="number"
                         min="0"
                         placeholder="Enter Total Stock . . ."
-                        disabled={!uploadImageUrl}
+                        disabled={product ? false : !uploadImageUrl}
                         {...field}
                       />
                     </FormControl>
@@ -278,7 +311,7 @@ export default function AddProduct_Form({ setLoadForm }) {
                 <Button
                   type="submit"
                   className="w-full"
-                  disabled={!uploadImageUrl}
+                  disabled={product ? false : !uploadImageUrl}
                 >
                   Add New Product
                 </Button>

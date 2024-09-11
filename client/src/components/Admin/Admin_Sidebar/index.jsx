@@ -9,7 +9,7 @@ export default function AdminSidebar() {
   const { pathname } = useLocation();
   return (
     <Fragment>
-      <aside className="border border-slate-50 shadow-2xl shadow-slate-50 m-2 p-5 rounded-xl hidden lg:block ">
+      <aside className="border border-slate-200 shadow-2xl m-2 p-5 rounded-xl hidden lg:block ">
         <div className="flex items-center flex-col space-y-20">
           <div className="flex items-center gap-1 justify-center">
             <span>

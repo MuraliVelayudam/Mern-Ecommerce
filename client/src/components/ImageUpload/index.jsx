@@ -18,6 +18,7 @@ export default function ImageUpload({
   setUploadImageUrl,
   setLoading,
   loading,
+  product,
 }) {
   const inputRef = useRef();
   const [imageError, SetImageError] = useState("");
@@ -96,14 +97,15 @@ export default function ImageUpload({
         ref={inputRef}
         onChange={onHandle_ImageUpload}
         className="hidden"
+        disabled={product}
       />
       <div className="flex items-center justify-center">
         {!imageFile ? (
           <Label
             htmlFor="image_upload"
-            className={`capitalize text-sm  text-center flex flex-col items-center justify-center border-2 border-dashed w-full rounded-xl pt-10 ${
-              imageError ? "text-[#EF4444]" : ""
-            }`}
+            className={`capitalize text-sm   text-center flex flex-col items-center justify-center border-2 border-dashed w-full rounded-xl pt-10
+              ${product ? "bg-black/5" : ""}
+              ${imageError ? "text-[#EF4444]" : ""}`}
           >
             Drag and Drop Or Click to Upload Product Image
             <span>

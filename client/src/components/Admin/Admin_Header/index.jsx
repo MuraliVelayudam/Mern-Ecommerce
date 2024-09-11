@@ -6,7 +6,7 @@ import MobileSidebar from "./sidebar_Mobile";
 
 export default function AdminHeader() {
   return (
-    <header className="border border-slate-50 shadow-2xl shadow-slate-50 flex items-center justify-between m-2 p-5 rounded-xl ">
+    <header className="border border-slate-200 shadow-2xl flex items-center justify-between m-2 p-5 rounded-xl">
       <div className="lg:hidden">
         <MobileSidebar />
       </div>

@@ -71,7 +71,7 @@ const addNewProduct = async (req, res) => {
 // GET ALL PRODUCTS
 const get_All_Products = async (req, res) => {
   try {
-    const allProducts = await Product.find({});
+    const allProducts = await Product.find({}).sort({ createdAt: -1 });
     res.status(200).json({
       success: true,
       error: false,
@@ -90,16 +90,9 @@ const get_All_Products = async (req, res) => {
 // EDIT PRODUCT BY ID
 const update_A_Product = async (req, res) => {
   const { productId } = req.params;
-  const {
-    brand,
-    category,
-    description,
-    image,
-    price,
-    salePrice,
-    title,
-    totalStock,
-  } = req.body;
+
+  const { brand, category, description, price, salePrice, title, totalStock } =
+    req.body;
 
   try {
     const productExists = await Product.findById(productId);
@@ -112,16 +105,19 @@ const update_A_Product = async (req, res) => {
       });
     }
 
-    const updatedProduct = await Product.findByIdAndUpdate(productId, {
-      brand,
-      category,
-      description,
-      image,
-      price,
-      salePrice,
-      title,
-      totalStock,
-    });
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      {
+        brand,
+        category,
+        description,
+        price,
+        salePrice,
+        title,
+        totalStock,
+      },
+      { new: true }
+    );
 
     res.status(200).json({
       success: true,
@@ -130,6 +126,11 @@ const update_A_Product = async (req, res) => {
       updatedProduct,
     });
   } catch (error) {
+    console.log(
+      "-------------------------",
+      error.message,
+      "-------------------------"
+    );
     res.status(500).json({
       success: false,
       error: error.message,
