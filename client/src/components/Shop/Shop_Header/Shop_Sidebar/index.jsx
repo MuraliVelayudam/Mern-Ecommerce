@@ -23,7 +23,6 @@ import { TiThMenu } from "react-icons/ti";
 
 export default function ShopSidebar({ user }) {
   const { pathname } = useLocation();
-  console.log(user);
   return (
     <div>
       <Sheet>
