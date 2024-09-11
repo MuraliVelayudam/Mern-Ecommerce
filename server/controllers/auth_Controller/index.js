@@ -70,6 +70,7 @@ const user_SignIn = async (req, res) => {
         id: userExists?._id,
         email: userExists?.email,
         role: userExists?.role,
+        username: userExists?.username,
       },
       configuration?.secretKey,
       { expiresIn: 24 * 60 * 60 * 1000 }

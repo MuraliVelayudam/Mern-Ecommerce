@@ -137,7 +137,7 @@ export default function SignInForm() {
           to={"/auth/signUp"}
           className="font-semibold hover:underline underline-offset-2"
         >
-          SignUp
+          Signup
         </Link>
       </div>
     </div>

@@ -72,10 +72,47 @@ const brandOptions = [
   { id: "h&m", label: "H&M" },
 ];
 
+// SHOP NAV LINKS
+const shopNav_Links = [
+  {
+    label: "Home",
+    path: "/shop/home",
+  },
+  {
+    label: "Products",
+    path: "/shop/listing",
+  },
+  {
+    label: "Men",
+    path: "/shop/listing",
+  },
+  {
+    label: "Women",
+    path: "/shop/listing",
+  },
+  {
+    label: "Kids",
+    path: "/shop/listing",
+  },
+  {
+    label: "Footwear",
+    path: "/shop/listing",
+  },
+  {
+    label: "Accessories",
+    path: "/shop/listing",
+  },
+  {
+    label: "Search",
+    path: "/shop/search",
+  },
+];
+
 export {
   signUp_Inputs,
   signIn_Inputs,
   admin_Sidebar_Nav,
   categoryOptions,
   brandOptions,
+  shopNav_Links,
 };
