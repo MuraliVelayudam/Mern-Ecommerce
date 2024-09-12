@@ -4,12 +4,13 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import authRoute from "./routers/auth_Route/index.js";
 import admin_Product_Route from "./routers/admin_Route/Product_Route/index.js";
+import configuration from "./config/config.js";
 
 const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: configuration?.client_url,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: [
       "Content-Type",
