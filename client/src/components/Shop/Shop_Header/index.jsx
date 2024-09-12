@@ -13,20 +13,21 @@ export default function ShopHeader() {
     <div className="border border-b shadow-xl sticky top-0 py-5 flex items-center justify-between lg:px-10 max-lg:px-5">
       <Logo />
       <Shop_Navbar />
-      <div className="flex items-center gap-5">
-        <div>
-          <button>
-            <CiShoppingCart size={28} />
-          </button>
-        </div>
+      <div className="flex items-center justify-between gap-5">
+        <button>
+          <CiShoppingCart size={30} />
+        </button>
+
         <div className="lg:hidden block">
           <ShopSidebar user={user} />
         </div>
         <div className="hidden lg:block">
           <ShopUserInfo
-            className={"uppercase text-xl rounded-full py-5  font-heading"}
+            className={
+              "uppercase w- text-xl rounded-full py-5  font-heading bg-wite border border-black text-black hover:text-white hover:border-white"
+            }
             user={user?.username[0]}
-            size={"w-40"}
+            size={"w-48 mt-4 "}
           />
         </div>
       </div>

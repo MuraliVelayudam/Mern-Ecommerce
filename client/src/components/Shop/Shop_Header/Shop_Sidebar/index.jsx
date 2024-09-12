@@ -39,8 +39,8 @@ export default function ShopSidebar({ user }) {
             <Separator />
             <SheetDescription className="hidden"></SheetDescription>
           </SheetHeader>
-          <div className="">
-            <ul className="flex flex-col items-start justify-start gap-6 ">
+          <div>
+            <ul className="flex flex-col items-center justify-center gap-6 ">
               {shopNav_Links.map((eachLink, index) => (
                 <li key={index}>
                   <Link
