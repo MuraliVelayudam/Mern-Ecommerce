@@ -3,7 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import authRoute from "./routers/auth_Route/index.js";
-import admin_Product_Route from "./routers/admin_Route/Product_Route/index.js";
+import admin_Product_Route from "./routers/admin_Route/product_Route/index.js";
 import configuration from "./config/config.js";
 
 const app = express();
