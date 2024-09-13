@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 export default function ShopHeader() {
   const { user } = useSelector((state) => state.auth);
   return (
-    <div className="border border-b shadow-xl sticky top-0 py-5 flex items-center justify-between lg:px-10 max-lg:px-5">
+    <div className="border border-b shadow-xl sticky top-0 py-5 flex items-center justify-between lg:px-10 max-lg:px-5 bg-white">
       <Logo />
       <Shop_Navbar />
       <div className="flex items-center justify-between gap-5">
